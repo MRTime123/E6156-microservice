@@ -1,37 +1,37 @@
-from fastapi import FastAPI, Response
+import flask
 
-# I like to launch directly and not use the standard FastAPI startup
-import uvicorn
-
-from resources.students import StudentsResource
-
-app = FastAPI()
-
-students_resource = StudentsResource()
+app = flask.Flask(__name__)
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def root():
+    return "Hello World!\n"
 
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Awesome cloud developer rm3959 says hello {name}"}
+@app.get("/pet")
+def say_hello():
+    return "Hello Pet!\n"
 
 
-@app.get("/hello_text/{name}")
-async def say_hello_text(name: str):
-    the_message = f"Awesome cloud developer rm3959 says Hello {name}"
-    rsp = Response(content=the_message, media_type="text/plain")
-    return rsp
+@app.post("/pet")
+def say_hello_text():
+    return "Awesome cloud developer rm3959 says Hello\n"
 
 
-@app.get("/students")
-async def get_students():
-    result = students_resource.get_students()
-    return result
+@app.get("/pet/{petId}")
+def say_pet_id():
+    return "Awesome cloud developer rm3959 says Hello\n"
+
+
+@app.post("/pet/{petId}")
+def return_pet_id():
+    return "Awesome cloud developer rm3959 says Hello\n"
+
+
+@app.delete("/pet/{petId}")
+def delete_pet():
+    return "The World Ends With You\n"
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8012)
+    app.run(host="0.0.0.0", port=8080, debug=True)
